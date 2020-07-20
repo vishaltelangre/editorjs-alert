@@ -45,10 +45,10 @@ Copy [`dist/bundle.js`](./dist/bundle.js) file to your page.
 
 ### Load from CDN
 
-You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/vishaltelangre/editorjs-alert).
+You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/editorjs-alert).
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vishaltelangre/editorjs-alert@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/editorjs-alert@latest"></script>
 ```
 
 ## Usage
