@@ -17,6 +17,8 @@ Watch this tool in action in the following short GIF movie.
 <p align="center">
   <img src="https://user-images.githubusercontent.com/876195/87923460-294ee780-ca9b-11ea-8a73-009453d77478.gif" alt="Alert sneak peek GIF!">
 
+**Try it out yourself on the [demo page](https://vishaltelangre.github.io/editorjs-alert/examples/demo.html).**
+
 ## Installation
 
 ### Install via NPM
@@ -119,7 +121,7 @@ All properties are optional.
 
 - Run `yarn install`.
 - Run `yarn dev` to continuously watch for the changes made in `./src/index.js` and updates a development bundle under `./dist` folder.
-- Open `./examples/index.html` in the browser to verify the tool's functionality.
+- Open `./examples/development.html` in the browser to verify the tool's functionality.
 
 ## License
 
