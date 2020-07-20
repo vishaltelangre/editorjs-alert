@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "precommit": "lint-staged"
+    "precommit": "yarn build && git add dist && lint-staged"
   },
   "husky": {
     "hooks": {

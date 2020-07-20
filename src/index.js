@@ -279,18 +279,6 @@ export default class Alert {
   }
 
   /**
-   * Used by Editor.js paste handling API.
-   * Provides configuration to handle rich HTML tags.
-   *
-   * @returns {{handler: (function(HTMLElement): {text: string}), tags: string[]}}
-   */
-  static get pasteConfig() {
-    return {
-      tags: ['A', 'BR', 'STRONG', 'EM', 'B'],
-    };
-  }
-
-  /**
    * Allow Alert to be converted to/from other blocks
    */
   static get conversionConfig() {
