@@ -114,8 +114,9 @@ export default class Alert {
    * @param {AlertData} data — previously saved data
    * @param {AlertConfig} config — user config for Tool
    * @param {Object} api - Editor.js API
+   * @param {boolean} readOnly - read only mode flag
    */
-  constructor({ data, config, api }) {
+  constructor({ data, config, api, readOnly }) {
     this.api = api;
 
     this.defaultType = config.defaultType || Alert.DEFAULT_TYPE;
@@ -130,6 +131,17 @@ export default class Alert {
     };
 
     this.container = undefined;
+    
+    this.readOnly = readOnly;
+  }
+  
+  /**
+   * Returns true to notify the core that read-only mode is supported
+   *
+   * @return {boolean}
+   */
+  static get isReadOnlySupported() {
+    return true;
   }
 
   /**
@@ -146,7 +158,7 @@ export default class Alert {
     this.container = this._make('div', containerClasses);
 
     const messageEl = this._make('div', [this.CSS.message], {
-      contentEditable: true,
+      contentEditable: !this.readOnly,
       innerHTML: this.data.message,
     });
 
