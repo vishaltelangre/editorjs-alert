@@ -74,6 +74,7 @@
 }
 
 .cdx-alert.cdx-settings-button {
+  box-sizing: border-box;
   margin: 3px;
   width: 28px;
   height: 28px;
