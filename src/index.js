@@ -193,7 +193,7 @@ export default class Alert {
    * @returns {string}
    */
   _getAlertName(type) {
-    return type.charAt(0).toUpperCase() + type.slice(1);
+    return this.api.i18n.t(type.charAt(0).toUpperCase() + type.slice(1));
   }
 
   /**
