@@ -8,12 +8,13 @@
 /**
  * Build styles
  */
-require('./index.css').toString();
+require('./index.scss').toString();
 
 /**
- * Import Tool's icon
+ * Import Tool's icons
  */
 import ToolboxIcon from '../assets/icon.svg';
+import SettingsIcon from '../assets/settings-icon.svg';
 
 /**
  * @class Alert
@@ -100,8 +101,6 @@ export default class Alert {
    */
   get CSS() {
     return {
-      settingsButton: this.api.styles.settingsButton,
-      settingsButtonActive: this.api.styles.settingsButtonActive,
       wrapper: 'cdx-alert',
       wrapperForType: (type) => `cdx-alert-${type}`,
       message: 'cdx-alert__message',
@@ -131,10 +130,10 @@ export default class Alert {
     };
 
     this.container = undefined;
-    
+
     this.readOnly = readOnly;
   }
-  
+
   /**
    * Returns true to notify the core that read-only mode is supported
    *
@@ -175,45 +174,26 @@ export default class Alert {
    * @returns {HTMLElement}
    */
   renderSettings() {
-    const settingsContainer = this._make('div');
-
-    Alert.ALERT_TYPES.forEach((type) => {
-      const settingsButton = this._make(
-        'div',
-        [
-          this.CSS.settingsButton,
-          this.CSS.wrapper,
-          this.CSS.wrapperForType(type),
-        ],
-        {
-          innerHTML: 'A',
-        }
-      );
-
-      if (this.data.type === type) {
-        // Highlight current type button
-        settingsButton.classList.add(this.CSS.settingsButtonActive);
-      }
-
-      // Set up click handler
-      settingsButton.addEventListener('click', () => {
+    return Alert.ALERT_TYPES.map((type) => ({
+      icon: SettingsIcon,
+      name: `alert-${type}`,
+      label: this._getAlertName(type),
+      toggle: 'alert',
+      isActive: this.data.type === type,
+      onActivate: () => {
         this._changeAlertType(type);
+      },
+    }));
+  }
 
-        // Un-highlight previous type button
-        settingsContainer
-          .querySelectorAll(`.${this.CSS.settingsButton}`)
-          .forEach((button) =>
-            button.classList.remove(this.CSS.settingsButtonActive)
-          );
-
-        // and highlight the clicked type button
-        settingsButton.classList.add(this.CSS.settingsButtonActive);
-      });
-
-      settingsContainer.appendChild(settingsButton);
-    });
-
-    return settingsContainer;
+  /**
+   * Helper for forming Alert Name
+   *
+   * @param {string} type - Alert type
+   * @returns {string}
+   */
+  _getAlertName(type) {
+    return type.charAt(0).toUpperCase() + type.slice(1);
   }
 
   /**
