@@ -171,7 +171,7 @@ export default class Alert {
   /**
    * Create Block's settings block
    *
-   * @returns {HTMLElement}
+   * @returns {array}
    */
   renderSettings() {
     return Alert.ALERT_TYPES.map((type) => ({
