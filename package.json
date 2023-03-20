@@ -1,6 +1,6 @@
 {
   "name": "editorjs-alert",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Editor.js tool for adding colorful alerts",
   "main": "./dist/bundle.js",
   "scripts": {
