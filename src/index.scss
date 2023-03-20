@@ -1,0 +1,73 @@
+// prettier-ignore
+$alert-themes:
+  'primary'   #ebf8ff #4299e1 #2b6cb0,
+  'secondary' #f7fafc #cbd5e0 #222731,
+  'info'      #e6fdff #4cd4ce #00727c,
+  'success'   #f0fff4 #68d391 #2f855a,
+  'warning'   #fffaf0 #ed8936 #c05621,
+  'danger'    #fff5f5 #fc8181 #c53030,
+  'light'     #fff    #edf2f7 #1a202c,
+  'dark'      #2d3748 #1a202c #d3d3d3;
+
+@mixin alert-variant($backgorund-color, $border-color, $content-color) {
+  background-color: $backgorund-color;
+  border: 1px solid $border-color;
+  color: $content-color;
+}
+
+@mixin settings-icon-variant($backgorund-color, $border-color, $content-color) {
+  svg {
+    #background {
+      fill: $backgorund-color;
+      stroke: $border-color;
+    }
+    #content {
+      fill: $content-color;
+    }
+  }
+}
+
+.cdx-alert {
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+@each $name, $backgorund-color, $border-color, $content-color in $alert-themes {
+  .cdx-alert-#{$name} {
+    @include alert-variant($backgorund-color, $border-color, $content-color);
+  }
+}
+
+.cdx-alert__message {
+  outline: none;
+}
+
+.cdx-alert [contentEditable='true'][data-placeholder] {
+  &::before {
+    position: absolute;
+    content: attr(data-placeholder);
+    color: #707684;
+    font-weight: normal;
+    opacity: 0;
+  }
+
+  &:empty::before {
+    opacity: 1;
+  }
+
+  &:empty:focus::before {
+    opacity: 0;
+  }
+}
+
+@each $name, $backgorund-color, $border-color, $content-color in $alert-themes {
+  .ce-popover__item[data-item-name='alert-#{$name}'] .ce-popover__item-icon {
+    @include settings-icon-variant(
+      $backgorund-color,
+      $border-color,
+      $content-color
+    );
+  }
+}

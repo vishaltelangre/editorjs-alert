@@ -11,19 +11,22 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: 'babel-loader',
-              query: {
+              options: {
                 presets: ['@babel/preset-env'],
               },
             },
           ],
         },
         {
-          test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
+          test: /\.s?[ac]ss$/i,
+          use: ['style-loader', 'css-loader', 'sass-loader'],
         },
         {
           test: /\.svg$/,
-          loader: 'svg-inline-loader?removeSVGTagAttrs=false',
+          loader: 'svg-inline-loader',
+          options: {
+            removeSVGTagAttrs: false,
+          },
         },
       ],
     },
