@@ -15,6 +15,10 @@ require('./index.scss').toString();
  */
 import ToolboxIcon from '../assets/icon.svg';
 import SettingsIcon from '../assets/settings-icon.svg';
+import IconAlignLeft from '../assets/IconAlignLeft.svg';
+import IconAlignCenter from '../assets/IconAlignCenter.svg';
+import IconAlignRight from '../assets/IconAlignRight.svg';
+
 
 /**
  * @class Alert
@@ -25,11 +29,13 @@ import SettingsIcon from '../assets/settings-icon.svg';
  * @typedef {object} AlertData
  * @description Alert Tool`s input and output data
  * @property {string} type - Alert type
+ * @property {string} justifyType - Alert justify type
  * @property {string} message - Alert message
  *
  * @typedef {object} AlertConfig
  * @description Alert Tool`s initial configuration
  * @property {string} defaultType - default Alert type
+ * @property {string} defaultJustifyType - default justify Alert type
  * @property {string} messagePlaceholder - placeholder to show in Alert`s message input
  */
 export default class Alert {
@@ -66,6 +72,16 @@ export default class Alert {
   }
 
   /**
+   * Default Alert justify type
+   *
+   * @public
+   * @returns {string}
+   */
+  static get DEFAULT_JUSTIFY_TYPE() {
+    return 'left';
+  }
+
+  /**
    * Default placeholder for Alert message
    *
    * @public
@@ -94,6 +110,22 @@ export default class Alert {
     ];
   }
 
+
+    /**
+   * Supported Justify types
+   *
+   * @public
+   * @returns {array}
+   */
+    static get JUSTIFY_TYPES() {
+      return [
+        'left',
+        'center',
+        'right'
+      ];
+    }
+
+
   /**
    * Alert Tool`s styles
    *
@@ -103,6 +135,7 @@ export default class Alert {
     return {
       wrapper: 'cdx-alert',
       wrapperForType: (type) => `cdx-alert-${type}`,
+      wrapperForJustifyType: (justifyType) => `cdx-alert-justify-${justifyType}`,
       message: 'cdx-alert__message',
     };
   }
@@ -119,6 +152,7 @@ export default class Alert {
     this.api = api;
 
     this.defaultType = config.defaultType || Alert.DEFAULT_TYPE;
+    this.defaultJustify = config.defaultJustify || Alert.DEFAULT_JUSTIFY_TYPE;
     this.messagePlaceholder =
       config.messagePlaceholder || Alert.DEFAULT_MESSAGE_PLACEHOLDER;
 
@@ -126,6 +160,9 @@ export default class Alert {
       type: Alert.ALERT_TYPES.includes(data.type)
         ? data.type
         : this.defaultType,
+      justify: Alert.JUSTIFY_TYPES.includes(data.justify)
+        ? data.justify
+        : this.defaultJustify,
       message: data.message || '',
     };
 
@@ -152,6 +189,7 @@ export default class Alert {
     const containerClasses = [
       this.CSS.wrapper,
       this.CSS.wrapperForType(this.data.type),
+      this.CSS.wrapperForJustifyType(this.data.justify),
     ];
 
     this.container = this._make('div', containerClasses);
@@ -174,26 +212,41 @@ export default class Alert {
    * @returns {array}
    */
   renderSettings() {
-    return Alert.ALERT_TYPES.map((type) => ({
+    let alert_types = Alert.ALERT_TYPES.map((type) => ({
       icon: SettingsIcon,
       name: `alert-${type}`,
-      label: this._getAlertName(type),
+      label: this._getFormattedName(type),
       toggle: 'alert',
       isActive: this.data.type === type,
       onActivate: () => {
         this._changeAlertType(type);
       },
     }));
+
+    let justify_types =  Alert.JUSTIFY_TYPES.map((justify) => ({
+      icon: (justify == 'left')   ? IconAlignLeft
+          : (justify == 'center') ? IconAlignCenter
+          : (justify == 'right')  ? IconAlignRight
+          : IconAlign_left, 
+      name: `justify-${justify}`,
+      label: this._getFormattedName(justify),
+      toggle: 'justify',
+      isActive: this.data.justify === justify,
+      onActivate: () => {
+        this._changeJustifyType(justify);
+      },
+    }));
+    return [...alert_types, ...justify_types];
   }
 
   /**
-   * Helper for forming Alert Name
+   * Helper for forming Alert / Justify Names
    *
    * @param {string} type - Alert type
    * @returns {string}
    */
-  _getAlertName(type) {
-    return this.api.i18n.t(type.charAt(0).toUpperCase() + type.slice(1));
+  _getFormattedName(name) {
+    return this.api.i18n.t(name.charAt(0).toUpperCase() + name.slice(1));
   }
 
   /**
@@ -218,6 +271,32 @@ export default class Alert {
       }
     });
   }
+
+
+   /**
+   * Helper for changing justify of Alert block with the selected Justify type
+   *
+   * @param {string} newType - new justify type to be applied to the block
+   * @private
+   */
+   _changeJustifyType(newJustify) {
+    // Save new type
+    this.data.justify = newJustify;
+
+    Alert.JUSTIFY_TYPES.forEach((justify) => {
+      const justifyClass = this.CSS.wrapperForJustifyType(justify);
+
+      // Remove the old Alert type class
+      this.container.classList.remove(justifyClass);
+
+      if (newJustify === justify) {
+        // Add an Alert class for the selected Alert type
+        this.container.classList.add(justifyClass);
+      }
+    });
+  }
+
+
 
   /**
    * Extract Alert data from Alert Tool element
@@ -282,6 +361,7 @@ export default class Alert {
         return {
           message: string,
           type: this.DEFAULT_TYPE,
+          justifyType : this.DEFAULT_JUSTIFY_TYPE,
         };
       },
     };
@@ -293,8 +373,9 @@ export default class Alert {
    */
   static get sanitize() {
     return {
-      type: false,
       message: true,
+      type: false,
+      justifyType: false
     };
   }
 }

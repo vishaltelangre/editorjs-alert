@@ -9,6 +9,7 @@ $alert-themes:
   'light'     #fff    #edf2f7 #1a202c,
   'dark'      #2d3748 #1a202c #d3d3d3;
 
+
 @mixin alert-variant($backgorund-color, $border-color, $content-color) {
   background-color: $backgorund-color;
   border: 1px solid $border-color;
@@ -38,6 +39,17 @@ $alert-themes:
   .cdx-alert-#{$name} {
     @include alert-variant($backgorund-color, $border-color, $content-color);
   }
+}
+
+
+.cdx-alert-justify-left{
+  text-align: left;
+}
+.cdx-alert-justify-center{
+  text-align: center;
+}
+.cdx-alert-justify-right{
+  text-align: right;
 }
 
 .cdx-alert__message {
