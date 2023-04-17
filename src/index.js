@@ -276,7 +276,7 @@ export default class Alert {
    /**
    * Helper for changing justify of Alert block with the selected Justify type
    *
-   * @param {string} newType - new justify type to be applied to the block
+   * @param {string} newJustify - new justify type to be applied to the block
    * @private
    */
    _changeJustifyType(newJustify) {
