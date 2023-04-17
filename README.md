@@ -98,9 +98,8 @@ All properties are optional.
 | Field                | Type     | Default Value  | Description                                                                                                                |
 | -------------------- | -------- | -------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `defaultType`        | `string` | `info`         | default Alert type (should be either of `primary`, `secondary`, `info`, `success`, `warning`, `danger`, `light` or `dark`) |
-| `defaultJustify`     | `string` | `left`         | default Alert justification (should be either of `left`, `center` or `right`)                                              |
-| `messagePlaceholder` | `string` | `Type here...` | placeholder to show in Alert`s message input                                                                               |
-|                      |          |                |                                                                                                                            |
+| `defaultAlign`     | `string` | `left`         | default Alert alignment (should be either of `left`, `center` or `right`)                                              |
+| `messagePlaceholder` | `string` | `Type here...` | placeholder to show in Alert`s message 
 
 ## Output data
 
@@ -108,14 +107,14 @@ All properties are optional.
 | ------- | -------- | --------------------------------------------------------------------------------------------------------- |
 | message | `string` | Alert message                                                                                             |
 | type    | `string` | Alert type among one of `primary`, `secondary`, `info`, `success`, `warning`, `danger`, `light` or `dark` |
-| justify | `string` | Justification type should be one of `left`, `center` or `right`                                           |
+| align   | `string` | Align type should be one of `left`, `center` or `right`                                                   |
 
 ```json
 {
   "type": "alert",
   "data": {
     "type": "danger",
-    "justify" : "center",
+    "align" : "center",
     "text": "<strong>Holy smokes!</strong><br>Something seriously <em>bad</em> happened."
   }
 }
