@@ -29,13 +29,13 @@ import IconAlignRight from '../assets/IconAlignRight.svg';
  * @typedef {object} AlertData
  * @description Alert Tool`s input and output data
  * @property {string} type - Alert type
- * @property {string} justifyType - Alert justify type
+ * @property {string} alignType - Alert align type
  * @property {string} message - Alert message
  *
  * @typedef {object} AlertConfig
  * @description Alert Tool`s initial configuration
  * @property {string} defaultType - default Alert type
- * @property {string} defaultJustifyType - default justify Alert type
+ * @property {string} defaultAlignType - default align Alert type
  * @property {string} messagePlaceholder - placeholder to show in Alert`s message input
  */
 export default class Alert {
@@ -72,12 +72,12 @@ export default class Alert {
   }
 
   /**
-   * Default Alert justify type
+   * Default Alert align type
    *
    * @public
    * @returns {string}
    */
-  static get DEFAULT_JUSTIFY_TYPE() {
+  static get DEFAULT_ALIGN_TYPE() {
     return 'left';
   }
 
@@ -112,12 +112,12 @@ export default class Alert {
 
 
     /**
-   * Supported Justify types
+   * Supported Align types
    *
    * @public
    * @returns {array}
    */
-    static get JUSTIFY_TYPES() {
+    static get ALIGN_TYPES() {
       return [
         'left',
         'center',
@@ -135,7 +135,7 @@ export default class Alert {
     return {
       wrapper: 'cdx-alert',
       wrapperForType: (type) => `cdx-alert-${type}`,
-      wrapperForJustifyType: (justifyType) => `cdx-alert-justify-${justifyType}`,
+      wrapperForAlignType: (alignType) => `cdx-alert-align-${alignType}`,
       message: 'cdx-alert__message',
     };
   }
@@ -152,7 +152,7 @@ export default class Alert {
     this.api = api;
 
     this.defaultType = config.defaultType || Alert.DEFAULT_TYPE;
-    this.defaultJustify = config.defaultJustify || Alert.DEFAULT_JUSTIFY_TYPE;
+    this.defaultAlign = config.defaultAlign || Alert.DEFAULT_ALIGN_TYPE;
     this.messagePlaceholder =
       config.messagePlaceholder || Alert.DEFAULT_MESSAGE_PLACEHOLDER;
 
@@ -160,9 +160,9 @@ export default class Alert {
       type: Alert.ALERT_TYPES.includes(data.type)
         ? data.type
         : this.defaultType,
-      justify: Alert.JUSTIFY_TYPES.includes(data.justify)
-        ? data.justify
-        : this.defaultJustify,
+      align: Alert.ALIGN_TYPES.includes(data.align)
+        ? data.align
+        : this.defaultAlign,
       message: data.message || '',
     };
 
@@ -189,7 +189,7 @@ export default class Alert {
     const containerClasses = [
       this.CSS.wrapper,
       this.CSS.wrapperForType(this.data.type),
-      this.CSS.wrapperForJustifyType(this.data.justify),
+      this.CSS.wrapperForAlignType(this.data.align),
     ];
 
     this.container = this._make('div', containerClasses);
@@ -223,24 +223,24 @@ export default class Alert {
       },
     }));
 
-    let justify_types =  Alert.JUSTIFY_TYPES.map((justify) => ({
-      icon: (justify == 'left')   ? IconAlignLeft
-          : (justify == 'center') ? IconAlignCenter
-          : (justify == 'right')  ? IconAlignRight
+    let align_types =  Alert.ALIGN_TYPES.map((align) => ({
+      icon: (align == 'left')   ? IconAlignLeft
+          : (align == 'center') ? IconAlignCenter
+          : (align == 'right')  ? IconAlignRight
           : IconAlign_left, 
-      name: `justify-${justify}`,
-      label: this._getFormattedName(justify),
-      toggle: 'justify',
-      isActive: this.data.justify === justify,
+      name: `align-${align}`,
+      label: this._getFormattedName(align),
+      toggle: 'align',
+      isActive: this.data.align === align,
       onActivate: () => {
-        this._changeJustifyType(justify);
+        this._changeAlignType(align);
       },
     }));
-    return [...alert_types, ...justify_types];
+    return [...alert_types, ...align_types];
   }
 
   /**
-   * Helper for forming Alert / Justify Names
+   * Helper for forming Alert / Align Names
    *
    * @param {string} type - Alert type
    * @returns {string}
@@ -274,24 +274,24 @@ export default class Alert {
 
 
    /**
-   * Helper for changing justify of Alert block with the selected Justify type
+   * Helper for changing align of Alert block with the selected Align type
    *
-   * @param {string} newJustify - new justify type to be applied to the block
+   * @param {string} newAlign - new align type to be applied to the block
    * @private
    */
-   _changeJustifyType(newJustify) {
+   _changeAlignType(newAlign) {
     // Save new type
-    this.data.justify = newJustify;
+    this.data.align = newAlign;
 
-    Alert.JUSTIFY_TYPES.forEach((justify) => {
-      const justifyClass = this.CSS.wrapperForJustifyType(justify);
+    Alert.ALIGN_TYPES.forEach((align) => {
+      const alignClass = this.CSS.wrapperForAlignType(align);
 
       // Remove the old Alert type class
-      this.container.classList.remove(justifyClass);
+      this.container.classList.remove(alignClass);
 
-      if (newJustify === justify) {
+      if (newAlign === align) {
         // Add an Alert class for the selected Alert type
-        this.container.classList.add(justifyClass);
+        this.container.classList.add(alignClass);
       }
     });
   }
@@ -361,7 +361,7 @@ export default class Alert {
         return {
           message: string,
           type: this.DEFAULT_TYPE,
-          justifyType : this.DEFAULT_JUSTIFY_TYPE,
+          alignType : this.DEFAULT_ALIGN_TYPE,
         };
       },
     };
@@ -375,7 +375,7 @@ export default class Alert {
     return {
       message: true,
       type: false,
-      justifyType: false
+      alignType: false
     };
   }
 }
