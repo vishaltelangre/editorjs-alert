@@ -240,9 +240,9 @@ export default class Alert {
   }
 
   /**
-   * Helper for forming Alert / Align Names
+   * Helper for formatting Alert Type / Align Type
    *
-   * @param {string} type - Alert type
+   * @param {string} type - Alert type or Align type
    * @returns {string}
    */
   _getFormattedName(name) {
