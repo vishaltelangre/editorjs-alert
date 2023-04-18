@@ -15,9 +15,9 @@ require('./index.scss').toString();
  */
 import ToolboxIcon from '../assets/icon.svg';
 import SettingsIcon from '../assets/settings-icon.svg';
-import IconAlignLeft from '../assets/IconAlignLeft.svg';
-import IconAlignCenter from '../assets/IconAlignCenter.svg';
-import IconAlignRight from '../assets/IconAlignRight.svg';
+import AlignLeftIcon from '../assets/align-left-icon.svg';
+import AlignCenterIcon from '../assets/align-center-icon.svg';
+import AlignRightIcon from '../assets/align-right-icon.svg';
 
 
 /**
@@ -224,9 +224,9 @@ export default class Alert {
     }));
 
     let align_types =  Alert.ALIGN_TYPES.map((align) => ({
-      icon: (align == 'left')   ? IconAlignLeft
-          : (align == 'center') ? IconAlignCenter
-          : (align == 'right')  ? IconAlignRight
+      icon: (align == 'left')   ? AlignLeftIcon
+          : (align == 'center') ? AlignCenterIcon
+          : (align == 'right')  ? AlignRightIcon
           : IconAlign_left, 
       name: `align-${align}`,
       label: this._getFormattedName(align),
