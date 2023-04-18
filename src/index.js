@@ -224,9 +224,9 @@ export default class Alert {
     }));
 
     let align_types =  Alert.ALIGN_TYPES.map((align) => ({
-      icon: (align == 'left')   ? IconAlignLeft
-          : (align == 'center') ? IconAlignCenter
-          : (align == 'right')  ? IconAlignRight
+      icon: (align == 'left')   ? AlignLeftIcon
+          : (align == 'center') ? AlignCenterIcon
+          : (align == 'right')  ? AlignRightIcon
           : IconAlign_left, 
       name: `align-${align}`,
       label: this._getFormattedName(align),
