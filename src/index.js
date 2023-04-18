@@ -212,7 +212,7 @@ export default class Alert {
    * @returns {array}
    */
   renderSettings() {
-    let alert_types = Alert.ALERT_TYPES.map((type) => ({
+    const alertTypes = Alert.ALERT_TYPES.map((type) => ({
       icon: SettingsIcon,
       name: `alert-${type}`,
       label: this._getFormattedName(type),
@@ -224,9 +224,9 @@ export default class Alert {
     }));
 
     let align_types =  Alert.ALIGN_TYPES.map((align) => ({
-      icon: (align == 'left')   ? AlignLeftIcon
-          : (align == 'center') ? AlignCenterIcon
-          : (align == 'right')  ? AlignRightIcon
+      icon: (align == 'left')   ? IconAlignLeft
+          : (align == 'center') ? IconAlignCenter
+          : (align == 'right')  ? IconAlignRight
           : IconAlign_left, 
       name: `align-${align}`,
       label: this._getFormattedName(align),
@@ -240,9 +240,9 @@ export default class Alert {
   }
 
   /**
-   * Helper for forming Alert / Align Names
+   * Helper for formatting Alert Type / Align Type
    *
-   * @param {string} type - Alert type
+   * @param {string} type - Alert type or Align type
    * @returns {string}
    */
   _getFormattedName(name) {
