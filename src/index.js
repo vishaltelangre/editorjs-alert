@@ -212,7 +212,7 @@ export default class Alert {
    * @returns {array}
    */
   renderSettings() {
-    let alert_types = Alert.ALERT_TYPES.map((type) => ({
+    const alertTypes = Alert.ALERT_TYPES.map((type) => ({
       icon: SettingsIcon,
       name: `alert-${type}`,
       label: this._getFormattedName(type),
