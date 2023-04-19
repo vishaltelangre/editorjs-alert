@@ -15,6 +15,10 @@ require('./index.scss').toString();
  */
 import ToolboxIcon from '../assets/icon.svg';
 import SettingsIcon from '../assets/settings-icon.svg';
+import AlignLeftIcon from '../assets/align-left-icon.svg';
+import AlignCenterIcon from '../assets/align-center-icon.svg';
+import AlignRightIcon from '../assets/align-right-icon.svg';
+
 
 /**
  * @class Alert
@@ -25,11 +29,13 @@ import SettingsIcon from '../assets/settings-icon.svg';
  * @typedef {object} AlertData
  * @description Alert Tool`s input and output data
  * @property {string} type - Alert type
+ * @property {string} alignType - Alert align type
  * @property {string} message - Alert message
  *
  * @typedef {object} AlertConfig
  * @description Alert Tool`s initial configuration
  * @property {string} defaultType - default Alert type
+ * @property {string} defaultAlignType - default align Alert type
  * @property {string} messagePlaceholder - placeholder to show in Alert`s message input
  */
 export default class Alert {
@@ -66,6 +72,16 @@ export default class Alert {
   }
 
   /**
+   * Default Alert align type
+   *
+   * @public
+   * @returns {string}
+   */
+  static get DEFAULT_ALIGN_TYPE() {
+    return 'left';
+  }
+
+  /**
    * Default placeholder for Alert message
    *
    * @public
@@ -94,6 +110,22 @@ export default class Alert {
     ];
   }
 
+
+    /**
+   * Supported Align types
+   *
+   * @public
+   * @returns {array}
+   */
+    static get ALIGN_TYPES() {
+      return [
+        'left',
+        'center',
+        'right'
+      ];
+    }
+
+
   /**
    * Alert Tool`s styles
    *
@@ -103,6 +135,7 @@ export default class Alert {
     return {
       wrapper: 'cdx-alert',
       wrapperForType: (type) => `cdx-alert-${type}`,
+      wrapperForAlignType: (alignType) => `cdx-alert-align-${alignType}`,
       message: 'cdx-alert__message',
     };
   }
@@ -119,6 +152,7 @@ export default class Alert {
     this.api = api;
 
     this.defaultType = config.defaultType || Alert.DEFAULT_TYPE;
+    this.defaultAlign = config.defaultAlign || Alert.DEFAULT_ALIGN_TYPE;
     this.messagePlaceholder =
       config.messagePlaceholder || Alert.DEFAULT_MESSAGE_PLACEHOLDER;
 
@@ -126,6 +160,9 @@ export default class Alert {
       type: Alert.ALERT_TYPES.includes(data.type)
         ? data.type
         : this.defaultType,
+      align: Alert.ALIGN_TYPES.includes(data.align)
+        ? data.align
+        : this.defaultAlign,
       message: data.message || '',
     };
 
@@ -152,6 +189,7 @@ export default class Alert {
     const containerClasses = [
       this.CSS.wrapper,
       this.CSS.wrapperForType(this.data.type),
+      this.CSS.wrapperForAlignType(this.data.align),
     ];
 
     this.container = this._make('div', containerClasses);
@@ -174,26 +212,41 @@ export default class Alert {
    * @returns {array}
    */
   renderSettings() {
-    return Alert.ALERT_TYPES.map((type) => ({
+    const alertTypes = Alert.ALERT_TYPES.map((type) => ({
       icon: SettingsIcon,
       name: `alert-${type}`,
-      label: this._getAlertName(type),
+      label: this._getFormattedName(type),
       toggle: 'alert',
       isActive: this.data.type === type,
       onActivate: () => {
         this._changeAlertType(type);
       },
     }));
+
+    let align_types =  Alert.ALIGN_TYPES.map((align) => ({
+      icon: (align == 'left')   ? AlignLeftIcon
+          : (align == 'center') ? AlignCenterIcon
+          : (align == 'right')  ? AlignRightIcon
+          : IconAlign_left, 
+      name: `align-${align}`,
+      label: this._getFormattedName(align),
+      toggle: 'align',
+      isActive: this.data.align === align,
+      onActivate: () => {
+        this._changeAlignType(align);
+      },
+    }));
+    return [...alert_types, ...align_types];
   }
 
   /**
-   * Helper for forming Alert Name
+   * Helper for formatting Alert Type / Align Type
    *
-   * @param {string} type - Alert type
+   * @param {string} type - Alert type or Align type
    * @returns {string}
    */
-  _getAlertName(type) {
-    return this.api.i18n.t(type.charAt(0).toUpperCase() + type.slice(1));
+  _getFormattedName(name) {
+    return this.api.i18n.t(name.charAt(0).toUpperCase() + name.slice(1));
   }
 
   /**
@@ -218,6 +271,32 @@ export default class Alert {
       }
     });
   }
+
+
+   /**
+   * Helper for changing align of Alert block with the selected Align type
+   *
+   * @param {string} newAlign - new align type to be applied to the block
+   * @private
+   */
+   _changeAlignType(newAlign) {
+    // Save new type
+    this.data.align = newAlign;
+
+    Alert.ALIGN_TYPES.forEach((align) => {
+      const alignClass = this.CSS.wrapperForAlignType(align);
+
+      // Remove the old Alert type class
+      this.container.classList.remove(alignClass);
+
+      if (newAlign === align) {
+        // Add an Alert class for the selected Alert type
+        this.container.classList.add(alignClass);
+      }
+    });
+  }
+
+
 
   /**
    * Extract Alert data from Alert Tool element
@@ -282,6 +361,7 @@ export default class Alert {
         return {
           message: string,
           type: this.DEFAULT_TYPE,
+          alignType : this.DEFAULT_ALIGN_TYPE,
         };
       },
     };
@@ -293,8 +373,9 @@ export default class Alert {
    */
   static get sanitize() {
     return {
-      type: false,
       message: true,
+      type: false,
+      alignType: false
     };
   }
 }

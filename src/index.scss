@@ -40,6 +40,16 @@ $alert-themes:
   }
 }
 
+.cdx-alert-align-left{
+  text-align: left;
+}
+.cdx-alert-align-center{
+  text-align: center;
+}
+.cdx-alert-align-right{
+  text-align: right;
+}
+
 .cdx-alert__message {
   outline: none;
 }
