@@ -99,7 +99,7 @@ All properties are optional.
 | -------------------- | -------- | -------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `defaultType`        | `string` | `info`         | default Alert type (should be either of `primary`, `secondary`, `info`, `success`, `warning`, `danger`, `light` or `dark`) |
 | `defaultAlign`     | `string` | `left`         | default Alert alignment (should be either of `left`, `center` or `right`)                                              |
-| `messagePlaceholder` | `string` | `Type here...` | placeholder to show in Alert`s message 
+| `messagePlaceholder` | `string` | `Type here...` | placeholder to show in Alert`s message
 
 ## Output data
 
@@ -125,6 +125,14 @@ All properties are optional.
 - Run `yarn install`.
 - Run `yarn dev` to continuously watch for the changes made in `./src/index.js` and updates a development bundle under `./dist` folder.
 - Open `./examples/development.html` in the browser to verify the tool's functionality.
+
+## Publishing to NPM
+
+- Run `yarn build` to build the production bundle, bump the version in `package.json`.
+- Commit and push the changes.
+- Create a release new tag for the bumped version (e.g. `git tag v1.0.2`).
+- Push the tag using `git push --tags`.
+- Publish the package to NPM using `yarn publish`.
 
 ## License
 
