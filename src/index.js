@@ -19,7 +19,6 @@ import AlignLeftIcon from '../assets/align-left-icon.svg';
 import AlignCenterIcon from '../assets/align-center-icon.svg';
 import AlignRightIcon from '../assets/align-right-icon.svg';
 
-
 /**
  * @class Alert
  * @classdesc Alert Tool for Editor.js
@@ -110,21 +109,15 @@ export default class Alert {
     ];
   }
 
-
-    /**
+  /**
    * Supported Align types
    *
    * @public
    * @returns {array}
    */
-    static get ALIGN_TYPES() {
-      return [
-        'left',
-        'center',
-        'right'
-      ];
-    }
-
+  static get ALIGN_TYPES() {
+    return ['left', 'center', 'right'];
+  }
 
   /**
    * Alert Tool`s styles
@@ -223,11 +216,15 @@ export default class Alert {
       },
     }));
 
-    let align_types =  Alert.ALIGN_TYPES.map((align) => ({
-      icon: (align == 'left')   ? AlignLeftIcon
-          : (align == 'center') ? AlignCenterIcon
-          : (align == 'right')  ? AlignRightIcon
-          : IconAlign_left, 
+    const alignTypes = Alert.ALIGN_TYPES.map((align) => ({
+      icon:
+        align == 'left'
+          ? AlignLeftIcon
+          : align == 'center'
+          ? AlignCenterIcon
+          : align == 'right'
+          ? AlignRightIcon
+          : IconAlign_left,
       name: `align-${align}`,
       label: this._getFormattedName(align),
       toggle: 'align',
@@ -236,7 +233,7 @@ export default class Alert {
         this._changeAlignType(align);
       },
     }));
-    return [...alert_types, ...align_types];
+    return [...alertTypes, ...alignTypes];
   }
 
   /**
@@ -272,14 +269,13 @@ export default class Alert {
     });
   }
 
-
-   /**
+  /**
    * Helper for changing align of Alert block with the selected Align type
    *
    * @param {string} newAlign - new align type to be applied to the block
    * @private
    */
-   _changeAlignType(newAlign) {
+  _changeAlignType(newAlign) {
     // Save new type
     this.data.align = newAlign;
 
@@ -295,8 +291,6 @@ export default class Alert {
       }
     });
   }
-
-
 
   /**
    * Extract Alert data from Alert Tool element
@@ -361,7 +355,7 @@ export default class Alert {
         return {
           message: string,
           type: this.DEFAULT_TYPE,
-          alignType : this.DEFAULT_ALIGN_TYPE,
+          alignType: this.DEFAULT_ALIGN_TYPE,
         };
       },
     };
@@ -375,7 +369,7 @@ export default class Alert {
     return {
       message: true,
       type: false,
-      alignType: false
+      alignType: false,
     };
   }
 }
