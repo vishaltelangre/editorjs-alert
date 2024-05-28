@@ -144,13 +144,14 @@ export default class Alert {
   constructor({ data, config, api, readOnly }) {
     this.api = api;
 
+    this.alertTypes = config.alertTypes || Alert.ALERT_TYPES;
     this.defaultType = config.defaultType || Alert.DEFAULT_TYPE;
     this.defaultAlign = config.defaultAlign || Alert.DEFAULT_ALIGN_TYPE;
     this.messagePlaceholder =
       config.messagePlaceholder || Alert.DEFAULT_MESSAGE_PLACEHOLDER;
 
     this.data = {
-      type: Alert.ALERT_TYPES.includes(data.type)
+      type: this.alertTypes.includes(data.type)
         ? data.type
         : this.defaultType,
       align: Alert.ALIGN_TYPES.includes(data.align)
@@ -205,7 +206,7 @@ export default class Alert {
    * @returns {array}
    */
   renderSettings() {
-    const alertTypes = Alert.ALERT_TYPES.map((type) => ({
+    const alertTypes = this.alertTypes.map((type) => ({
       icon: SettingsIcon,
       name: `alert-${type}`,
       label: this._getFormattedName(type),
@@ -256,7 +257,7 @@ export default class Alert {
     // Save new type
     this.data.type = newType;
 
-    Alert.ALERT_TYPES.forEach((type) => {
+    this.alertTypes.forEach((type) => {
       const alertClass = this.CSS.wrapperForType(type);
 
       // Remove the old Alert type class

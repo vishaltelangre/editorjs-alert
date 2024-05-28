@@ -81,6 +81,7 @@ var editor = EditorJS({
       inlineToolbar: true,
       shortcut: 'CMD+SHIFT+A',
       config: {
+        alertTypes: ['primary', 'secondary', 'info', 'success', 'warning', 'danger', 'light', 'dark'],
         defaultType: 'primary',
         messagePlaceholder: 'Enter something',
       },
@@ -97,6 +98,7 @@ All properties are optional.
 
 | Field                | Type     | Default Value  | Description                                                                                                                |
 | -------------------- | -------- | -------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `alertTypes`         | `array`  | `['primary', 'secondary', 'info', 'success', 'warning', 'danger', 'light', 'dark']` | Alert types that can be used in the editor |
 | `defaultType`        | `string` | `info`         | default Alert type (should be either of `primary`, `secondary`, `info`, `success`, `warning`, `danger`, `light` or `dark`) |
 | `defaultAlign`     | `string` | `left`         | default Alert alignment (should be either of `left`, `center` or `right`)                                              |
 | `messagePlaceholder` | `string` | `Type here...` | placeholder to show in Alert`s message
