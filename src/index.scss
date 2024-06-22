@@ -52,6 +52,7 @@ $alert-themes:
 
 .cdx-alert__message {
   outline: none;
+  -webkit-user-modify: read-write-plaintext-only;
 }
 
 .cdx-alert [contentEditable='true'][data-placeholder] {
